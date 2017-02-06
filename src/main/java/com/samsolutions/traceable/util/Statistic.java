@@ -1,5 +1,9 @@
 package com.samsolutions.traceable.util;
 
+import com.google.gson.Gson;
+
+import javax.annotation.PreDestroy;
+import java.time.LocalDateTime;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.concurrent.ConcurrentSkipListMap;
@@ -11,13 +15,21 @@ public class Statistic {
 
     private final static int MAX_COUNT_OF_SHOWING_ELEMENTS = 3;
 
-    class Info {
-        Long time;
-        String beanName;
+    protected Gson gson = new Gson();
 
-        public Info(Long time, String beanName) {
-            this.time = time;
+    class Info {
+        Long duration;
+        String beanName;
+        String operationName;
+        String argument;
+        LocalDateTime start;
+
+        public Info(Long duration, String beanName, String operationName, String argument, LocalDateTime start) {
+            this.duration = duration;
             this.beanName = beanName;
+            this.operationName = operationName;
+            this.argument = argument;
+            this.start = start;
         }
 
         public Info() {
@@ -26,10 +38,19 @@ public class Statistic {
 
     ConcurrentSkipListMap<Long, Info> tree = new ConcurrentSkipListMap<Long, Info>(new ByReverseTimeWithDuplicateComparator());
 
-    public void show3LongestOperations() {
+    public String show3LongestOperations() {
+        int i = 0;
+        String s = null;
         for (Map.Entry element : tree.entrySet()) {
-            System.out.println(element.getKey() + "   " + (Info) element.getValue());
+//            System.out.println(element.getKey() + "   " + (Info) element.getValue());
+            String elementString = gson.toJson(element);
+            s += gson.toJson(element);
+            System.out.println(elementString);
+            if (++i >= MAX_COUNT_OF_SHOWING_ELEMENTS) {
+                return s;
+            }
         }
+        return s;
     }
 
     public void addValue(Long key, String value) {
@@ -42,5 +63,10 @@ public class Statistic {
             int result = e2.compareTo(e1);
             return result == 0 ? -1 : result;
         }
+    }
+
+    @PreDestroy
+    public void destroy() {
+        show3LongestOperations();
     }
 }

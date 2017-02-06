@@ -1,6 +1,6 @@
-package com.samsolutions.traceable;
+package com.samsolutions.traceable.stub;
 
-import com.samsolutions.traceable.config.TraceableConfig;
+import com.samsolutions.traceable.stub.config.TraceableConfig;
 import com.samsolutions.traceable.util.Statistic;
 import com.samsolutions.traceable.util.config.UtilConfig;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -24,6 +24,6 @@ public class Main {
         obj2.doBusinessLogic(1.);
         obj3.doBusinessLogic("abc");
 
-        statistic.show3LongestOperations();
+//        statistic.show3LongestOperations();
     }
 }

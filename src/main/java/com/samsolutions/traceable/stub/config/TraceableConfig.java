@@ -1,9 +1,9 @@
-package com.samsolutions.traceable.config;
+package com.samsolutions.traceable.stub.config;
 
-import com.samsolutions.traceable.Traceable;
-import com.samsolutions.traceable.TraceableImplStub;
-import com.samsolutions.traceable.TraceableImplStub2;
-import com.samsolutions.traceable.TraceableImplStub3;
+import com.samsolutions.traceable.stub.Traceable;
+import com.samsolutions.traceable.stub.TraceableImplStub;
+import com.samsolutions.traceable.stub.TraceableImplStub2;
+import com.samsolutions.traceable.stub.TraceableImplStub3;
 import org.springframework.context.annotation.Bean;
 
 public class TraceableConfig {
